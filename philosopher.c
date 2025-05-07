@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:24:09 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/06 12:29:39 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/07 11:14:03 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,29 @@
 
 void	free_all(t_table *table)
 {
-	if (table->philo)
+	if (table->philos)
 	{
-		free(table->philo);
-		table->philo = NULL;
+		free(table->philos);
+		table->philos = NULL;
 	}
 	free(table);
 }
 
-
 int	main(int argc, char *argv[])
 {
-	t_table *table;
+	t_table	*table;
 
+	table = NULL;
 	if (argc < 5)
-		return(printf("Usage: number_of_philosophers time_to_die time_to_eat time_to_sleep
-		[number_of_times_each_philosopher_must_eat]", 0));
-	table = init_table(table, argv);
+		return (0);
+	table = malloc(sizeof(t_table));
 	if (!table)
-		return(free_all(table), 0);
-
+		return (1);
+	init_table(table, argv);
+	if (!table)
+		return (free_all(table), 0);
+	init_philo(table);
+	return (0);
 }
+
+//valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file="log.txt"
