@@ -66,36 +66,6 @@ funzione per unmutare le fork nella struttura del filosofo N
 dal momento in cui viene creato il thread, si hanno time to die ms per entrare nello stato di eating (tempo complessivo tra sleep e think). Il tempo si resetta quando mangia e riparte quando ha iniziato a pensare
 
 
-
-
-Fase 2 — Parsing e inizializzazione
-Obiettivo: leggere input e allocare strutture.
-
-funzione init_table() per:
-
-OK Validare argomenti
-
-OK Salvare i valori nella struct
-
-OK Allocare i fork mutex
-
-Inizializzare write_mutex
-
-Allocare philo[i] e assegnare id, forchette, etc.
-
-🚥 Inizializza tutti i mutex con pthread_mutex_init
-
-🧵 Fase 3 — Creazione dei thread
-Obiettivo: lanciare i thread correttamente
-
-K Ogni filosofo è un thread:
-
-OK Usa pthread_create(&philo->thread, ..., routine, philo)
-
-OK Fai join su ogni thread
-
-Verifica che ogni thread funzioni stampando “filosofo X inizia a mangiare”
-
 🍽 Fase 4 — Routine dei filosofi
 Obiettivo: implementare routine()
 

@@ -4,6 +4,7 @@ FLAGS = -Wall -Wextra -Werror -pthread
 SRC = philosopher.c\
 		init_table.c\
 		init_philo.c\
+		ft_life.c\
 
 OBJ = $(SRC:.c=.o)
 
