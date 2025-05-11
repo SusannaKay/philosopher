@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:14:44 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/11 21:23:32 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/11 21:41:20 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int	check_death(t_philo *philo)
 
 void	is_eating(t_philo *philo)
 {
+	pthread_mutex_lock(philo->left);
+	print_state(philo, "has taken a fork\n");
+	pthread_mutex_lock(philo->right);
+	print_state(philo, "has taken a fork\n");
 	pthread_mutex_lock(philo->table->meals_lock);
 	philo->last_meal = time_stamp(philo->table->start_time);
 	philo->meals_eaten++;
@@ -40,10 +44,6 @@ void	*routine(void *arg)
 	{
 		if (check_death(philo))
 			return (NULL);
-		pthread_mutex_lock(philo->left);
-		print_state(philo, "has taken a fork\n");
-		pthread_mutex_lock(philo->right);
-		print_state(philo, "has taken a fork\n");
 		is_eating(philo);
 		pthread_mutex_unlock(philo->left);
 		pthread_mutex_unlock(philo->right);

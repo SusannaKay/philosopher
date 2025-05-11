@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:29:36 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/11 21:01:12 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/11 21:39:24 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,22 @@ static int	ft_atoi(const char *str)
 
 static int	init_mutex(t_table *table)
 {
+	table->forks = malloc(table->n_philo * sizeof(pthread_mutex_t));
+	if (!table->forks)
+		return (0);
+	table->death_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!table->death_mutex)
+		return (0);
 	if (pthread_mutex_init(table->death_mutex, NULL) != 0)
+		return (0);
+	table->meals_lock = malloc(sizeof(pthread_mutex_t));
+	if (!table->meals_lock)
 		return (0);
 	if (pthread_mutex_init(table->meals_lock, NULL) != 0)
 		return (0);
+	table->print_lock = malloc(sizeof(pthread_mutex_t));
+	if (!table->print_lock)
+		return(0);
 	if (pthread_mutex_init(table->print_lock, NULL) != 0)
 		return (0);
 	return (1);
@@ -75,9 +87,6 @@ t_table	*init_table(t_table *table, char *argv[])
 	table->is_dead = 0;
 	table->philos = malloc(table->n_philo * sizeof(t_philo *));
 	if (!table->philos)
-		return (free_all(table), NULL);
-	table->forks = malloc(table->n_philo * sizeof(pthread_mutex_t));
-	if (!table->forks)
 		return (free_all(table), NULL);
 	if (!init_mutex(table))
 		return (free_all(table), NULL);
