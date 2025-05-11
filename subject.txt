@@ -71,13 +71,13 @@ Obiettivo: implementare routine()
 
 Passi da seguire nella routine:
 
-Prendere forche (lock)
+OK Prendere forche (lock)
 
-Stampare “ha preso una forchetta”
+OK Stampare “ha preso una forchetta”
 
 Mangiare (aggiorna last_meal, sleep)
 
-Lasciare le forche (unlock)
+OK Lasciare le forche (unlock)
 
 Dormire
 
@@ -106,7 +106,7 @@ Blocchi tutto (table->died = 1)
 
 Sblocchi eventuali mutex
 
-Blocca la stampa con write_mutex per evitare sovrapposizioni
+OK Blocca la stampa con write_mutex per evitare sovrapposizioni
 
 🧹 Fase 6 — Fine programma e free
 Obiettivo: liberare memoria e distruggere mutex

@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:16:16 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/07 10:49:56 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/08 12:13:57 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ t_table					*init_table(t_table *table, char *argv[]);
 void					init_philo(t_table *table);
 void					free_all(t_table *table);
 void					*routine(void *arg);
+void print_state(t_philo *philo, char *msg);
 
 #endif

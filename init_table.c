@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:29:36 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/07 11:11:18 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/08 08:28:22 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_atoi(const char *str)
 
 t_table	*init_table(t_table *table, char *argv[])
 {
-	if ((table->n_philo = ft_atoi(argv[1])) > 200 || table->n_philo < 0)
+	if ((table->n_philo = ft_atoi(argv[1])) > 200 || table->n_philo == -1)
 		return (NULL);
 	if ((table->time_to_die = ft_atoi(argv[2])) < 0)
 		return (NULL);
