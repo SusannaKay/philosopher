@@ -71,17 +71,17 @@ Obiettivo: implementare routine()
 
 Passi da seguire nella routine:
 
-Prendere forche (lock)
+OK Prendere forche (lock)
 
-Stampare “ha preso una forchetta”
+OK Stampare “ha preso una forchetta”
 
-Mangiare (aggiorna last_meal, sleep)
+OK Mangiare (aggiorna last_meal, sleep)
 
-Lasciare le forche (unlock)
+OK Lasciare le forche (unlock)
 
-Dormire
+OK Dormire
 
-Pensare
+OK Pensare
 
 Usa get_time() per calcolare tempo da start_time
 
@@ -94,19 +94,16 @@ Crea un thread separato o funzione nel main:
 
 Loop che ogni 1ms controlla:
 
-c
-Copy
-Edit
 get_time() - philo[i]->last_meal > time_to_die
 Se sì:
 
-Stampi “X died”
+OK Stampi “X died”
 
-Blocchi tutto (table->died = 1)
+OK Blocchi tutto (table->died = 1)
 
 Sblocchi eventuali mutex
 
-Blocca la stampa con write_mutex per evitare sovrapposizioni
+OK Blocca la stampa con write_mutex per evitare sovrapposizioni
 
 🧹 Fase 6 — Fine programma e free
 Obiettivo: liberare memoria e distruggere mutex

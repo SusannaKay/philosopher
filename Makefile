@@ -5,6 +5,7 @@ SRC = philosopher.c\
 		init_table.c\
 		init_philo.c\
 		ft_life.c\
+		print.c\
 
 OBJ = $(SRC:.c=.o)
 

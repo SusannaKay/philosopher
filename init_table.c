@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:29:36 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/07 11:11:18 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/11 21:01:12 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,20 @@ static int	ft_atoi(const char *str)
 	return (result);
 }
 
+static int	init_mutex(t_table *table)
+{
+	if (pthread_mutex_init(table->death_mutex, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(table->meals_lock, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(table->print_lock, NULL) != 0)
+		return (0);
+	return (1);
+}
+
 t_table	*init_table(t_table *table, char *argv[])
 {
-	if ((table->n_philo = ft_atoi(argv[1])) > 200 || table->n_philo < 0)
+	if ((table->n_philo = ft_atoi(argv[1])) > 200 || table->n_philo == -1)
 		return (NULL);
 	if ((table->time_to_die = ft_atoi(argv[2])) < 0)
 		return (NULL);
@@ -68,7 +79,7 @@ t_table	*init_table(t_table *table, char *argv[])
 	table->forks = malloc(table->n_philo * sizeof(pthread_mutex_t));
 	if (!table->forks)
 		return (free_all(table), NULL);
-	if (pthread_mutex_init(&table->print_lock, NULL) != 0)
+	if (!init_mutex(table))
 		return (free_all(table), NULL);
 	return (table);
 }

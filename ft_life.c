@@ -6,20 +6,49 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:14:44 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/07 12:13:40 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/11 21:23:32 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
+int	check_death(t_philo *philo)
+{
+	int	dead;
+
+	pthread_mutex_lock(philo->table->death_mutex);
+	dead = philo->table->is_dead;
+	pthread_mutex_unlock(philo->table->death_mutex);
+	return (dead);
+}
+
+void	is_eating(t_philo *philo)
+{
+	pthread_mutex_lock(philo->table->meals_lock);
+	philo->last_meal = time_stamp(philo->table->start_time);
+	philo->meals_eaten++;
+	pthread_mutex_unlock(philo->table->meals_lock);
+	print_state(philo, "is eating\n");
+	usleep(philo->table->time_to_eat * 1000);
+}
 void	*routine(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_lock(philo->left);
-	printf("%d ha preso una forchetta\n", philo->id);
-	pthread_mutex_lock(philo->right);
-	printf("%d ha iniziato a mangiare\n", philo->id);
-	return (NULL);
+	while (1)
+	{
+		if (check_death(philo))
+			return (NULL);
+		pthread_mutex_lock(philo->left);
+		print_state(philo, "has taken a fork\n");
+		pthread_mutex_lock(philo->right);
+		print_state(philo, "has taken a fork\n");
+		is_eating(philo);
+		pthread_mutex_unlock(philo->left);
+		pthread_mutex_unlock(philo->right);
+		print_state(philo, "is sleeping\n");
+		usleep(philo->table->time_to_sleep * 1000);
+		print_state(philo, "is thinking\n");
+	}
 }
