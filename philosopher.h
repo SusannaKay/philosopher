@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:16:16 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/11 21:23:13 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/12 17:58:24 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_table
 	int					meals_count;
 	int					is_dead;
 	struct timeval		start_time;
+	pthread_t			monitor;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		*print_lock;
 	pthread_mutex_t		*death_mutex;
@@ -56,5 +57,5 @@ void					free_all(t_table *table);
 void					*routine(void *arg);
 void					print_state(t_philo *philo, char *msg);
 long					time_stamp(struct timeval start_time);
-
+void					*monitor_philo(void *arg);
 #endif
