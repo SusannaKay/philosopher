@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:53 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/11 20:34:09 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/12 20:15:12 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,14 @@ void	init_philo(t_table *table)
 	}
 	assign_forks(table);
 	init_threads(table);
+	if (pthread_create(&table->monitor, NULL, monitor_philo, table) != 0)
+		return;
+	pthread_join(table->monitor, NULL);
 	i = 0;
 	while (i < table->n_philo)
 	{
 		if (pthread_join(table->philos[i]->thread, NULL) != 0)
-			return (free_all(table));
+			return;
 		i++;
 	}
 	return ;

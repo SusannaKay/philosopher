@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:24:09 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/12 18:21:29 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/12 21:15:44 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,23 @@
 
 void	free_all(t_table *table)
 {
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(table->forks);
+	pthread_mutex_destroy(table->print_lock);
+	pthread_mutex_destroy(table->death_mutex);
+	pthread_mutex_destroy(table->meals_lock);
 	if (table->philos)
 	{
-		free(table->philos);
-		table->philos = NULL;
+		while (i < table->n_philo)
+		{
+			pthread_mutex_destroy(table->philos[i]->left);
+			pthread_mutex_destroy(table->philos[i]->right);
+			table->philos[i]->table = NULL;
+			free(table->philos[i]);
+			i++;
+		}
 	}
 	free(table);
 }
@@ -36,9 +49,7 @@ int	main(int argc, char *argv[])
 	if (!table)
 		return (free_all(table), 0);
 	init_philo(table);
-	if (pthread_create(&table->monitor, NULL, monitor_philo, table) != 0)
-		return (free_all(table), 0);
-	pthread_join(table->monitor, NULL);
+	free_all(table);
 	return (0);
 }
 
