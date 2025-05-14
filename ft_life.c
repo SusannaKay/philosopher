@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:14:44 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/12 21:05:31 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:06:09 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	is_eating_odd(t_philo *philo)
 	usleep(philo->table->time_to_eat * 1000);
 	pthread_mutex_unlock(philo->left);
 	pthread_mutex_unlock(philo->right);
+	usleep(200);
 }
 void	is_eating_uneven(t_philo *philo)
 {
@@ -99,12 +100,13 @@ void	*routine(void *arg)
 	{
 		if (check_death(philo))
 			return (NULL);
-		if (philo->id % 2 == 0)
+		if (philo->id % 2 == 0 && philo->is_thinking == 1)
 			is_eating_odd(philo);
-		else
+		else if (philo->id % 2 != 0)
 			is_eating_uneven(philo);
 		print_state(philo, "is sleeping\n");
 		usleep(philo->table->time_to_sleep * 1000);
 		print_state(philo, "is thinking\n");
+		philo->is_thinking = 1;
 	}
 }

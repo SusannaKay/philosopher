@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:16:16 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/12 17:58:24 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:39:41 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_philo
 {
 	int					id;
 	int					meals_eaten;
+	int					is_thinking;
 	long				last_meal;
 	pthread_t			thread;
 	pthread_mutex_t		*left;

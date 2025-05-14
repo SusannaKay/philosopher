@@ -1,5 +1,5 @@
 NAME = philo
-FLAGS = -Wall -Wextra -Werror -pthread
+FLAGS = -Wall -Wextra -Werror -pthread -g -gdwarf-4
 
 SRC = philosopher.c\
 		init_table.c\

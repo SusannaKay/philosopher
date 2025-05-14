@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:24:09 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/12 21:15:44 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/14 15:29:20 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	main(int argc, char *argv[])
 	if (!table)
 		return (free_all(table), 0);
 	init_philo(table);
-	free_all(table);
 	return (0);
 }
 

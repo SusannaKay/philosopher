@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:53 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/12 20:15:12 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:41:16 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	init_philo(t_table *table)
 		table->philos[i]->id = i + 1;
 		table->philos[i]->meals_eaten = 0;
 		table->philos[i]->table = table;
+		table->philos[i]->is_thinking = 0;
 		i++;
 	}
 	assign_forks(table);
