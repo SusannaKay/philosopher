@@ -6,21 +6,11 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:14:44 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/15 10:23:11 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/15 10:45:34 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
-int	check_death(t_philo *philo)
-{
-	int	dead;
-
-	pthread_mutex_lock(philo->table->death_mutex);
-	dead = philo->table->is_dead;
-	pthread_mutex_unlock(philo->table->death_mutex);
-	return (dead);
-}
 
 void	is_eating_odd(t_philo *philo)
 {
@@ -73,19 +63,7 @@ void	*monitor_philo(void *arg)
 				- table->philos[i]->last_meal;
 			pthread_mutex_unlock(table->meals_lock);
 			if (time_since_meal > table->time_to_die)
-			{
-				pthread_mutex_lock(table->print_lock);
-				pthread_mutex_lock(table->death_mutex);
-				if (table->is_dead == 0)
-				{
-					table->is_dead = 1;
-					printf("%ld %d died\n", time_stamp(table->start_time),
-							table->philos[i]->id);
-				}
-				pthread_mutex_unlock(table->death_mutex);
-				pthread_mutex_unlock(table->print_lock);
-				return (NULL);
-			}
+				return (stop_simulation(table, i), NULL);
 			i++;
 		}
 		usleep(1000);
@@ -101,6 +79,14 @@ void	*routine(void *arg)
 	{
 		if (check_death(philo))
 			return (NULL);
+			if (philo->table->n_philo == 1)
+			{
+				pthread_mutex_lock(philo->left);
+				print_state(philo, "has taken a fork\n");
+				usleep(philo->table->time_to_die * 1000);
+				pthread_mutex_unlock(philo->left);
+				return (NULL);
+			}
 		if (philo->id % 2 == 0 && philo->is_thinking == 1)
 			is_eating_odd(philo);
 		else if (philo->id % 2 != 0)
