@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:14:44 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/14 17:06:09 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/15 10:23:11 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_death(t_philo *philo)
 
 void	is_eating_odd(t_philo *philo)
 {
-	usleep(1000);
+	
 	pthread_mutex_lock(philo->left);
 	print_state(philo, "has taken a fork\n");
 	pthread_mutex_lock(philo->right);
@@ -41,6 +41,7 @@ void	is_eating_odd(t_philo *philo)
 }
 void	is_eating_uneven(t_philo *philo)
 {
+	usleep(1000);
 	pthread_mutex_lock(philo->right);
 	print_state(philo, "has taken a fork\n");
 	pthread_mutex_lock(philo->left);
