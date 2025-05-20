@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:29:36 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/11 21:39:24 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/15 13:27:36 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,11 @@ t_table	*init_table(t_table *table, char *argv[])
 		if ((table->meals_count = ft_atoi(argv[5])) < 0)
 			return (NULL);
 	}
+	else 
+		table->meals_count = -1;
 	gettimeofday(&table->start_time, NULL);
 	table->is_dead = 0;
+	table->all_eaten = 0;
 	table->philos = malloc(table->n_philo * sizeof(t_philo *));
 	if (!table->philos)
 		return (free_all(table), NULL);

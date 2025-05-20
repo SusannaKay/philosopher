@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:41:57 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/15 10:47:51 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/15 11:07:33 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,15 @@ int	check_death(t_philo *philo)
 void stop_simulation(t_table *table, int i)
 {
 	pthread_mutex_lock(table->print_lock);
-				pthread_mutex_lock(table->death_mutex);
-				if (table->is_dead == 0)
-				{
-					table->is_dead = 1;
-					printf("%ld %d died\n", time_stamp(table->start_time),
-							table->philos[i]->id);
-				}
-				pthread_mutex_unlock(table->death_mutex);
-				pthread_mutex_unlock(table->print_lock);
-				return;
+	pthread_mutex_lock(table->death_mutex);
+	if (table->is_dead == 0)
+	{
+		table->is_dead = 1;
+		printf("%ld %d died\n", time_stamp(table->start_time), table->philos[i]->id);
+	}
+	pthread_mutex_unlock(table->death_mutex);
+	pthread_mutex_unlock(table->print_lock);
+	return;
 }
 
 void	free_all(t_table *table)

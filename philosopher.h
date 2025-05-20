@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:16:16 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/15 10:46:40 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/15 13:27:18 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_philo	t_philo;
 typedef struct s_table
 {
 	int					n_philo;
+	int	all_eaten;
 	long				time_to_die;
 	long				time_to_eat;
 	long				time_to_sleep;

@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:24:09 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/15 10:47:44 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/15 11:09:34 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char *argv[])
 	table = malloc(sizeof(t_table));
 	if (!table)
 		return (1);
-	if (init_table(table, argv) < 0 )
+	if (init_table(table, argv) < 0 || !table)
 		return (free_all(table), 0);
 	init_philo(table);
 	return (0);
