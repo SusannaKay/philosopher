@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:16:16 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/15 13:27:18 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/20 10:22:47 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ typedef struct s_philo	t_philo;
 typedef struct s_table
 {
 	int					n_philo;
-	int	all_eaten;
+	int					all_eaten; // quante volte hanno mangiato tutti i filosofi
 	long				time_to_die;
 	long				time_to_eat;
 	long				time_to_sleep;
-	int					meals_count;
+	int meals_count; // numero di volte che devono mangiare optional
 	int					is_dead;
 	struct timeval		start_time;
 	pthread_t			monitor;
@@ -43,7 +43,7 @@ typedef struct s_table
 typedef struct s_philo
 {
 	int					id;
-	int					meals_eaten;
+	int					meals_eaten; // quanti pasti ha fatto il filosofo
 	int					is_thinking;
 	long				last_meal;
 	pthread_t			thread;
