@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:41:57 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/20 10:56:59 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/21 14:01:31 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,17 @@ void	free_mutex(t_table *table)
 	{
 		while (i < table->n_philo)
 		{
-			pthread_mutex_destroy(table->forks[i]);
+			pthread_mutex_destroy(&table->forks[i]);
 			i++;
 		}
 		free(table->forks);
 	}
 	pthread_mutex_destroy(table->print_lock);
+	free(table->print_lock);
 	pthread_mutex_destroy(table->death_mutex);
+	free(table->death_mutex);
 	pthread_mutex_destroy(table->meals_lock);
+	free(table->meals_lock);
 }
 
 void	free_philo(t_table *table)
@@ -62,10 +65,7 @@ void	free_philo(t_table *table)
 	i = 0;
 	while (i < table->n_philo)
 	{
-		pthread_mutex_destroy(table->philo[i]->left);
-		pthread_mutex_destroy(table->philo[i]->right);
-		free(table->philo[i]->table);
-		free(table->philo[i]);
+		free(table->philos[i]);
 		i++;
 	}
 	free(table->philos);
@@ -73,10 +73,10 @@ void	free_philo(t_table *table)
 
 void	free_all(t_table *table)
 {
-	if (table->start_time)
-		free(start_time);
+	if(!table)
+		return;
 	free_mutex(table);
-	if (philos)
+	if (table->philos)
 		free_philo(table);
 	free(table);
 }

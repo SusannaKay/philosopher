@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:16:16 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/20 10:22:47 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/21 13:19:46 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>   //memset
-# include <sys/time.h> // gettimeofday
-# include <unistd.h>   //usleep
+# include <string.h>
+# include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_philo	t_philo;
 
 typedef struct s_table
 {
 	int					n_philo;
-	int					all_eaten; // quante volte hanno mangiato tutti i filosofi
+	int					all_eaten;
 	long				time_to_die;
 	long				time_to_eat;
 	long				time_to_sleep;
-	int meals_count; // numero di volte che devono mangiare optional
+	int					meals_count;
 	int					is_dead;
 	struct timeval		start_time;
 	pthread_t			monitor;
@@ -43,7 +43,7 @@ typedef struct s_table
 typedef struct s_philo
 {
 	int					id;
-	int					meals_eaten; // quanti pasti ha fatto il filosofo
+	int					meals_eaten;
 	int					is_thinking;
 	long				last_meal;
 	pthread_t			thread;
@@ -53,8 +53,8 @@ typedef struct s_philo
 
 }						t_philo;
 
-t_table					*init_table(t_table *table, char *argv[]);
-void					init_philo(t_table *table);
+int						init_table(t_table *table, char *argv[]);
+int						init_philo(t_table *table);
 void					free_all(t_table *table);
 void					*routine(void *arg);
 void					print_state(t_philo *philo, char *msg);

@@ -6,13 +6,13 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:53 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/20 10:31:43 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/21 13:15:31 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-static void	assign_forks(t_table *table)
+static int	assign_forks(t_table *table)
 {
 	int	i;
 
@@ -20,7 +20,7 @@ static void	assign_forks(t_table *table)
 	while (i < table->n_philo)
 	{
 		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
-			return (free_all(table));
+			return (-1);
 		i++;
 	}
 	i = 0;
@@ -30,9 +30,10 @@ static void	assign_forks(t_table *table)
 		table->philos[i]->right = &table->forks[(i + 1) % table->n_philo];
 		i++;
 	}
+	return (0);
 }
 
-static void	init_threads(t_table *table)
+static int	init_threads(t_table *table)
 {
 	int	i;
 
@@ -41,12 +42,13 @@ static void	init_threads(t_table *table)
 	{
 		if (pthread_create(&table->philos[i]->thread, NULL, routine,
 				table->philos[i]) != 0)
-			return (free_all(table));
+			return (-1);
 		i++;
 	}
+	return (0);
 }
 
-void	init_philo(t_table *table)
+int	init_philo(t_table *table)
 {
 	int	i;
 
@@ -55,24 +57,28 @@ void	init_philo(t_table *table)
 	{
 		table->philos[i] = malloc(sizeof(t_philo));
 		if (!table->philos[i])
-			return (free_all(table));
+			return (-1);
 		table->philos[i]->id = i + 1;
 		table->philos[i]->meals_eaten = 0;
+		table->philos[i]->last_meal = 0;
 		table->philos[i]->table = table;
 		table->philos[i]->is_thinking = 0;
 		i++;
 	}
-	assign_forks(table);
-	init_threads(table);
+	if (assign_forks(table) == -1)
+		return (-1);
+	if (init_threads(table) == -1)
+		return (-1);
 	if (pthread_create(&table->monitor, NULL, monitor_philo, table) != 0)
-		return ;
-	pthread_join(table->monitor, NULL);
+		return (-1);
+	if (pthread_join(table->monitor, NULL) != 0)
+		return (-1);
 	i = 0;
 	while (i < table->n_philo)
 	{
 		if (pthread_join(table->philos[i]->thread, NULL) != 0)
-			return ;
+			return (-1);
 		i++;
 	}
-	return ;
+	return (0);
 }

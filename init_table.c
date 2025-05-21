@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:29:36 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/15 13:27:36 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/21 15:53:23 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,20 @@ static int	init_mutex(t_table *table)
 	return (1);
 }
 
-t_table	*init_table(t_table *table, char *argv[])
+int init_table(t_table *table, char *argv[])
 {
 	if ((table->n_philo = ft_atoi(argv[1])) > 200 || table->n_philo == -1)
-		return (NULL);
+		return (-1);
 	if ((table->time_to_die = ft_atoi(argv[2])) < 0)
-		return (NULL);
+		return (-1);
 	if ((table->time_to_eat = ft_atoi(argv[3])) < 0)
-		return (NULL);
+		return (-1);
 	if ((table->time_to_sleep = ft_atoi(argv[4])) < 0)
-		return (NULL);
+		return (-1);
 	if (argv[5])
 	{
 		if ((table->meals_count = ft_atoi(argv[5])) < 0)
-			return (NULL);
+			return (-1);
 	}
 	else 
 		table->meals_count = -1;
@@ -90,8 +90,8 @@ t_table	*init_table(t_table *table, char *argv[])
 	table->all_eaten = 0;
 	table->philos = malloc(table->n_philo * sizeof(t_philo *));
 	if (!table->philos)
-		return (free_all(table), NULL);
+		return (-1);
 	if (!init_mutex(table))
-		return (free_all(table), NULL);
-	return (table);
+		return (-1);
+	return (0);
 }

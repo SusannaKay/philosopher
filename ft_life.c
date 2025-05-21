@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:14:44 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/20 10:29:18 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/21 15:42:54 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	is_eating_odd(t_philo *philo)
 	pthread_mutex_lock(philo->table->meals_lock);
 	philo->last_meal = time_stamp(philo->table->start_time);
 	philo->meals_eaten++;
-	philo->table->all_eaten++;
 	pthread_mutex_unlock(philo->table->meals_lock);
 	print_state(philo, "is eating\n");
 	if (philo->meals_eaten == philo->table->meals_count)
@@ -89,10 +88,9 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	philo->last_meal = time_stamp(philo->table->start_time);
 	while (1)
 	{
-		if (check_death(philo))
-			return (NULL);
 		if (philo->table->n_philo == 1)
 		{
 			pthread_mutex_lock(philo->left);
@@ -101,9 +99,11 @@ void	*routine(void *arg)
 			pthread_mutex_unlock(philo->left);
 			return (NULL);
 		}
-		while (philo->meals_eaten < philo->table->meals_count
+		while ((philo->meals_eaten < philo->table->meals_count)
 			|| philo->table->meals_count == -1)
 		{
+			if (check_death(philo))
+				return (NULL);
 			if (philo->id % 2 == 0 && philo->is_thinking == 1)
 				is_eating_odd(philo);
 			else if (philo->id % 2 != 0)
