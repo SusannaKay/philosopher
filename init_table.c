@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:29:36 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/24 08:20:17 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/25 19:36:15 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static int	init_mutex(t_table *table)
 
 int init_table(t_table *table, char *argv[])
 {
-	if ((table->n_philo = ft_atoi(argv[1])) > 200 || table->n_philo == -1)
+	if ((table->n_philo = ft_atoi(argv[1]))  == -1)
 		return (-1);
 	if ((table->time_to_die = ft_atoi(argv[2])) < 0)
 		return (-1);

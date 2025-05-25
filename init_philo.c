@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:53 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/24 08:20:26 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/25 19:37:04 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	init_philo(t_table *table)
 		table->philos[i] = malloc(sizeof(t_philo));
 		if (!table->philos[i])
 		{
-			// Clean up previously allocated philosophers
 			while (--i >= 0)
 			{
 				free(table->philos[i]);

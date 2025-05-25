@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:14:44 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/24 08:20:03 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/25 19:29:31 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	*monitor_philo(void *arg)
 	{
 		i = 0;
 		pthread_mutex_lock(table->meals_lock);
-		if (table->all_eaten == table->meals_count)
+		if (table->all_eaten == table->n_philo )
 		{
 			pthread_mutex_unlock(table->meals_lock);
 			return (NULL);
@@ -77,8 +77,7 @@ void	*monitor_philo(void *arg)
 		while (i < table->n_philo)
 		{
 			pthread_mutex_lock(table->meals_lock);
-			time_since_meal = time_stamp(table->start_time)
-				- table->philos[i]->last_meal;
+			time_since_meal = time_stamp(table->start_time) - table->philos[i]->last_meal;
 			pthread_mutex_unlock(table->meals_lock);
 			if (time_since_meal > table->time_to_die)
 				return (stop_simulation(table, i), NULL);
@@ -93,7 +92,9 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	pthread_mutex_lock(philo->table->meals_lock);
 	philo->last_meal = time_stamp(philo->table->start_time);
+	pthread_mutex_unlock(philo->table->meals_lock);
 	while (1)
 	{
 		if (philo->table->n_philo == 1)
