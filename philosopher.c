@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:24:09 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/25 19:39:27 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/25 20:33:26 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,15 @@ int	main(int argc, char *argv[])
 	if (!table)
 		return (printf("Error: malloc failed\n"), 1);
 	if (init_table(table, argv) == -1)
+	{
+		printf("Error: init table failed\n");
 		return (free_all(table), -1);
+	}
 	if (init_philo(table) == -1)
+	{
+		printf("Error: init philo failed\n");
 		return (free_all(table), -1);
+	}
 	free_all(table);
 	return (0);
 }
