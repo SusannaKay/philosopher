@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:42:25 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/11 21:23:52 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/25 19:38:05 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ long	time_stamp(struct timeval start_time)
 
 void	print_state(t_philo *philo, char *msg)
 {
-	t_table *table;
-	long time_since_start;
+	t_table	*table;
+	long	time_since_start;
 
 	table = philo->table;
 	pthread_mutex_lock(table->print_lock);
