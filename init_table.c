@@ -6,18 +6,11 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:29:36 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/25 19:36:15 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/25 20:06:09 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
-static int	ft_isdigit(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
 
 static int	ft_atoi(const char *str)
 {
@@ -52,65 +45,50 @@ static int	init_mutex(t_table *table)
 		return (0);
 	table->death_mutex = malloc(sizeof(pthread_mutex_t));
 	if (!table->death_mutex)
-	{
-		free(table->forks);
 		return (0);
-	}
 	if (pthread_mutex_init(table->death_mutex, NULL) != 0)
-	{
-		free(table->forks);
-		free(table->death_mutex);
 		return (0);
-	}
 	table->meals_lock = malloc(sizeof(pthread_mutex_t));
 	if (!table->meals_lock)
-	{
-		free(table->forks);
-		free(table->death_mutex);
 		return (0);
-	}
 	if (pthread_mutex_init(table->meals_lock, NULL) != 0)
-	{
-		free(table->forks);
-		free(table->death_mutex);
-		free(table->meals_lock);
 		return (0);
-	}
 	table->print_lock = malloc(sizeof(pthread_mutex_t));
 	if (!table->print_lock)
-	{
-		free(table->forks);
-		free(table->death_mutex);
-		free(table->meals_lock);
-		return(0);
-	}
-	if (pthread_mutex_init(table->print_lock, NULL) != 0)
-	{
-		free(table->forks);
-		free(table->death_mutex);
-		free(table->meals_lock);
-		free(table->print_lock);
 		return (0);
-	}
+	if (pthread_mutex_init(table->print_lock, NULL) != 0)
+		return (0);
 	return (1);
 }
 
-int init_table(t_table *table, char *argv[])
+static int	check_args(t_table *table)
 {
-	if ((table->n_philo = ft_atoi(argv[1]))  == -1)
+	if (table->n_philo < 0)
 		return (-1);
-	if ((table->time_to_die = ft_atoi(argv[2])) < 0)
+	if (table->time_to_die < 0)
 		return (-1);
-	if ((table->time_to_eat = ft_atoi(argv[3])) < 0)
+	if (table->time_to_eat < 0)
 		return (-1);
-	if ((table->time_to_sleep = ft_atoi(argv[4])) < 0)
+	if (table->time_to_sleep < 0)
+		return (-1);
+	return (0);
+}
+
+int	init_table(t_table *table, char *argv[])
+{
+	table->n_philo = ft_atoi(argv[1]);
+	table->time_to_die = ft_atoi(argv[2]);
+	table->time_to_eat = ft_atoi(argv[3]);
+	table->time_to_sleep = ft_atoi(argv[4]);
+	if (check_args(table) < 0)
 		return (-1);
 	if (argv[5])
 	{
-		if ((table->meals_count = ft_atoi(argv[5])) < 0)
+		table->meals_count = ft_atoi(argv[5]);
+		if (table->meals_count < 0)
 			return (-1);
 	}
-	else 
+	else
 		table->meals_count = -1;
 	gettimeofday(&table->start_time, NULL);
 	table->is_dead = 0;
