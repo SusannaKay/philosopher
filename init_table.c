@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:29:36 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/21 15:53:23 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/24 08:20:17 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,46 @@ static int	init_mutex(t_table *table)
 		return (0);
 	table->death_mutex = malloc(sizeof(pthread_mutex_t));
 	if (!table->death_mutex)
+	{
+		free(table->forks);
 		return (0);
+	}
 	if (pthread_mutex_init(table->death_mutex, NULL) != 0)
+	{
+		free(table->forks);
+		free(table->death_mutex);
 		return (0);
+	}
 	table->meals_lock = malloc(sizeof(pthread_mutex_t));
 	if (!table->meals_lock)
+	{
+		free(table->forks);
+		free(table->death_mutex);
 		return (0);
+	}
 	if (pthread_mutex_init(table->meals_lock, NULL) != 0)
+	{
+		free(table->forks);
+		free(table->death_mutex);
+		free(table->meals_lock);
 		return (0);
+	}
 	table->print_lock = malloc(sizeof(pthread_mutex_t));
 	if (!table->print_lock)
+	{
+		free(table->forks);
+		free(table->death_mutex);
+		free(table->meals_lock);
 		return(0);
+	}
 	if (pthread_mutex_init(table->print_lock, NULL) != 0)
+	{
+		free(table->forks);
+		free(table->death_mutex);
+		free(table->meals_lock);
+		free(table->print_lock);
 		return (0);
+	}
 	return (1);
 }
 

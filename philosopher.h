@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:16:16 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/21 13:19:46 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/24 08:22:30 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,5 @@ long					time_stamp(struct timeval start_time);
 void					*monitor_philo(void *arg);
 void					stop_simulation(t_table *table, int i);
 int						check_death(t_philo *philo);
+void	free_philo(t_table *table);
 #endif

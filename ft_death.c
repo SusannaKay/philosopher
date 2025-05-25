@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:41:57 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/21 14:01:31 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/24 08:20:31 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	free_mutex(t_table *table)
 {
 	int	i;
 
+	if (!table)
+		return;
 	i = 0;
 	if (table->forks)
 	{
@@ -49,34 +51,53 @@ void	free_mutex(t_table *table)
 			i++;
 		}
 		free(table->forks);
+		table->forks = NULL;
 	}
-	pthread_mutex_destroy(table->print_lock);
-	free(table->print_lock);
-	pthread_mutex_destroy(table->death_mutex);
-	free(table->death_mutex);
-	pthread_mutex_destroy(table->meals_lock);
-	free(table->meals_lock);
+	if (table->print_lock)
+	{
+		pthread_mutex_destroy(table->print_lock);
+		free(table->print_lock);
+		table->print_lock = NULL;
+	}
+	if (table->death_mutex)
+	{
+		pthread_mutex_destroy(table->death_mutex);
+		free(table->death_mutex);
+		table->death_mutex = NULL;
+	}
+	if (table->meals_lock)
+	{
+		pthread_mutex_destroy(table->meals_lock);
+		free(table->meals_lock);
+		table->meals_lock = NULL;
+	}
 }
 
 void	free_philo(t_table *table)
 {
 	int	i;
 
+	if (!table || !table->philos)
+		return;
 	i = 0;
 	while (i < table->n_philo)
 	{
-		free(table->philos[i]);
+		if (table->philos[i])
+		{
+			free(table->philos[i]);
+			table->philos[i] = NULL;
+		}
 		i++;
 	}
 	free(table->philos);
+	table->philos = NULL;
 }
 
 void	free_all(t_table *table)
 {
-	if(!table)
+	if (!table)
 		return;
 	free_mutex(table);
-	if (table->philos)
-		free_philo(table);
+	free_philo(table);
 	free(table);
 }

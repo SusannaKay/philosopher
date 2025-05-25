@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:14:44 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/21 15:42:54 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/24 08:20:03 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,13 @@ void	*monitor_philo(void *arg)
 	while (1)
 	{
 		i = 0;
+		pthread_mutex_lock(table->meals_lock);
 		if (table->all_eaten == table->meals_count)
+		{
+			pthread_mutex_unlock(table->meals_lock);
 			return (NULL);
+		}
+		pthread_mutex_unlock(table->meals_lock);
 		while (i < table->n_philo)
 		{
 			pthread_mutex_lock(table->meals_lock);
