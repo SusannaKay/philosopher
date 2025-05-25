@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:24:09 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/21 15:51:47 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/25 19:39:27 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,3 @@ int	main(int argc, char *argv[])
 	free_all(table);
 	return (0);
 }
-
-//valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=helgrind --log-file="log.txt"
-
-
-// piu di 200 filosofi 
-// data race in monitor filo 
-// 
