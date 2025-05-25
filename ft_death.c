@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:41:57 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/24 08:20:31 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/25 21:43:00 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,19 @@ void	stop_simulation(t_table *table, int i)
 	{
 		table->is_dead = 1;
 		printf("%ld %d died\n", time_stamp(table->start_time),
-				table->philos[i]->id);
+			table->philos[i]->id);
 	}
 	pthread_mutex_unlock(table->death_mutex);
 	pthread_mutex_unlock(table->print_lock);
 	return ;
 }
+
 void	free_mutex(t_table *table)
 {
 	int	i;
 
 	if (!table)
-		return;
+		return ;
 	i = 0;
 	if (table->forks)
 	{
@@ -54,23 +55,11 @@ void	free_mutex(t_table *table)
 		table->forks = NULL;
 	}
 	if (table->print_lock)
-	{
-		pthread_mutex_destroy(table->print_lock);
-		free(table->print_lock);
-		table->print_lock = NULL;
-	}
+		destroy_mutex(table->print_lock);
 	if (table->death_mutex)
-	{
-		pthread_mutex_destroy(table->death_mutex);
-		free(table->death_mutex);
-		table->death_mutex = NULL;
-	}
+		destroy_mutex(table->death_mutex);
 	if (table->meals_lock)
-	{
-		pthread_mutex_destroy(table->meals_lock);
-		free(table->meals_lock);
-		table->meals_lock = NULL;
-	}
+		destroy_mutex(table->meals_lock);
 }
 
 void	free_philo(t_table *table)
@@ -78,7 +67,7 @@ void	free_philo(t_table *table)
 	int	i;
 
 	if (!table || !table->philos)
-		return;
+		return ;
 	i = 0;
 	while (i < table->n_philo)
 	{
@@ -96,7 +85,7 @@ void	free_philo(t_table *table)
 void	free_all(t_table *table)
 {
 	if (!table)
-		return;
+		return ;
 	free_mutex(table);
 	free_philo(table);
 	free(table);

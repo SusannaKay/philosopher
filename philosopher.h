@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:16:16 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/25 19:38:44 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/25 21:43:24 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_philo
 {
 	int					id;
 	int					meals_eaten;
-	int					is_thinking;
 	long				last_meal;
 	pthread_t			thread;
 	pthread_mutex_t		*left;
@@ -63,4 +62,7 @@ void					*monitor_philo(void *arg);
 void					stop_simulation(t_table *table, int i);
 int						check_death(t_philo *philo);
 void					free_philo(t_table *table);
+int						ft_isdigit(char c);
+void					one_philo(t_philo *philo);
+void					destroy_mutex(pthread_mutex_t *mutex);
 #endif

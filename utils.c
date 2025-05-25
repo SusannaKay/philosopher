@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:42:25 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/25 19:38:05 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/25 21:43:10 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,27 @@ void	print_state(t_philo *philo, char *msg)
 		printf("%ld %d %s", time_since_start, philo->id, msg);
 	}
 	pthread_mutex_unlock(table->print_lock);
+}
+
+int	ft_isdigit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
+
+void	one_philo(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left);
+	print_state(philo, "has taken a fork\n");
+	usleep(philo->table->time_to_die * 1000);
+	pthread_mutex_unlock(philo->left);
+	return ;
+}
+
+void	destroy_mutex(pthread_mutex_t *mutex)
+{
+	pthread_mutex_destroy(mutex);
+	free(mutex);
+	mutex = NULL;
 }

@@ -6,7 +6,7 @@ SRC = philosopher.c\
 		init_philo.c\
 		ft_life.c\
 		ft_death.c\
-		print.c\
+		utils.c\
 
 OBJ = $(SRC:.c=.o)
 
