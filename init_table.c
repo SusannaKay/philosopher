@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:29:36 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/25 20:06:09 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/27 12:26:14 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ static int	ft_atoi(const char *str)
 		|| *str == '\v' || *str == '\r')
 		str++;
 	if (*str == '-')
-		return (printf("Error: Numbers must be positive."), -1);
+		return (printf("Error: Numbers must be positive.\n"), -1);
 	else if (*str == '+')
 		str++;
 	while (*str)
 	{
 		if (!ft_isdigit(*str))
-			return (printf("Error: Input must be a number."), -1);
+			return (printf("Error: Input must be a number.\n"), -1);
 		result = result * 10 + (*str - 48);
 		str++;
 	}
 	if (result > 2147483647)
-		return (printf("Error: Input must be below INT_MAX."), -1);
+		return (printf("Error: Input must be below INT_MAX.\n"), -1);
 	if (result == 0)
-		return (printf("Error: Input must be > 0"), -1);
+		return (printf("Error: Input must be > 0\n"), -1);
 	return (result);
 }
 
@@ -74,14 +74,24 @@ static int	check_args(t_table *table)
 	return (0);
 }
 
+static void	init_pointers(t_table *table)
+{
+	table->death_mutex = NULL;
+	table->print_lock = NULL;
+	table->meals_lock = NULL;
+	table->philos = NULL;
+	table->forks = NULL;
+}
+
 int	init_table(t_table *table, char *argv[])
 {
 	table->n_philo = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
+	init_pointers(table);
 	if (check_args(table) < 0)
-		return (-1);
+		return (printf("Args check failed\n"), -1);
 	if (argv[5])
 	{
 		table->meals_count = ft_atoi(argv[5]);

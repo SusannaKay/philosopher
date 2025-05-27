@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:41:57 by skayed            #+#    #+#             */
-/*   Updated: 2025/05/25 21:43:00 by skayed           ###   ########.fr       */
+/*   Updated: 2025/05/27 13:01:20 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	free_mutex(t_table *table)
 {
 	int	i;
 
+	i = 0;
 	if (!table)
 		return ;
-	i = 0;
 	if (table->forks)
 	{
 		while (i < table->n_philo)
@@ -66,9 +66,9 @@ void	free_philo(t_table *table)
 {
 	int	i;
 
+	i = 0;
 	if (!table || !table->philos)
 		return ;
-	i = 0;
 	while (i < table->n_philo)
 	{
 		if (table->philos[i])
